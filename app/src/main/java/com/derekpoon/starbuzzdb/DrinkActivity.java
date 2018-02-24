@@ -22,7 +22,6 @@ public class DrinkActivity extends AppCompatActivity {
 
         //get the drink from the intent
         int drinkNo = (Integer)getIntent().getExtras().get(EXTRA_DRINKNO);
-        Drink drink = Drink.drinks[drinkNo];
 
         //create a cursor
         try {
