@@ -55,7 +55,7 @@ class StarBuzzDatabaseHelper extends SQLiteOpenHelper {
         }
         if (oldVersion < 2) {
             //code to add the extra column
-            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAV NUMERIC;");
         }
     }
 
