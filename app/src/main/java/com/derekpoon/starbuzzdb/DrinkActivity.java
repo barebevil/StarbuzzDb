@@ -74,7 +74,7 @@ public class DrinkActivity extends Activity {
     //Update the database when the checkbox is clicked
     public void onFavouriteClicked(View view){
         int drinkNo = (Integer)getIntent().getExtras().get("drinkNo");
-        new UpdateDrinkTask().execute(drinkNo);
+        new UpdateDrinkTask().execute(drinkNo); //execute the task
     }
 
     //Inner class to update the drink.
