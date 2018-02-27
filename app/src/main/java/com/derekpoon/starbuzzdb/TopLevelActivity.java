@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 public class TopLevelActivity extends AppCompatActivity {
 
+    //adding these variables so we have access to them in the onDestroy() method
     private SQLiteDatabase db;
     private Cursor favouritesCursor;
 
@@ -71,23 +72,31 @@ public class TopLevelActivity extends AppCompatActivity {
             }
         });
     }
+
     //Close the cursor and database in the onDestroy() method
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         favouritesCursor.close();
         db.close();
     }
 
+    //this gets called when the user returns to the TopLevelActivity
     public void onRestart() {
         super.onRestart();
         try{
             StarBuzzDatabaseHelper starbuzzDatabaseHelper = new StarBuzzDatabaseHelper(this);
             db = starbuzzDatabaseHelper.getReadableDatabase();
+
+            //create the cursor
             Cursor newCursor = db.query("DRINK",
                     new String[] { "_id", "NAME"}, "FAVORITE = 1",
                     null, null, null, null);
-            ListView listFavorites = (ListView)findViewById(R.id.list_favorites); CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter(); adapter.changeCursor(newCursor);
+            ListView listFavorites = (ListView)findViewById(R.id.list_favorites);
+            //get the ListView's adapter
+            CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
+            //change the cursor used by the cursor adapter to the new one
+            adapter.changeCursor(newCursor);
             favouritesCursor = newCursor;
         } catch(SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT); toast.show();

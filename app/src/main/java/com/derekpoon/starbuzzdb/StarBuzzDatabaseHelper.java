@@ -20,17 +20,20 @@ class StarBuzzDatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 2; //version of the db
 
     StarBuzzDatabaseHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION); //call constructor
+        //calling SQLiteOpenHelper superclass and passing it the db name and
+        //version
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
-    //onCreate gets called when the database first gets created, so we're
+    //onCreate() gets called when the database first gets created, so we're
     //using it to create the table and insert data
     @Override
     public void onCreate(SQLiteDatabase db) {
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
-    //onUpgrade gets called when the database needs to be upgraded
+    //onUpgrade gets called when the database needs to be upgraded, e.g if you
+    //need to make table changes to the db after it has been released
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         updateMyDatabase(db, oldVersion, newVersion);
@@ -49,20 +52,19 @@ class StarBuzzDatabaseHelper extends SQLiteOpenHelper {
 
             //insert each drink in a separate row in the DRINK table
             insertDrink(db, "Latte", "Espresso and steamed milk", R.drawable.latte);
-            insertDrink(db, "Cappuccino", "Espresso, hot milk and steamed-milk foam",
-                    R.drawable.cappuccino);
+            insertDrink(db, "Cappuccino", "Espresso, hot milk and steamed-milk foam", R.drawable.cappuccino);
             insertDrink(db, "Filter", "Our best drip coffee", R.drawable.filter);
         }
         if (oldVersion < 2) {
             //code to add the extra column
-            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAV NUMERIC;");
+            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
         }
     }
 
     //this method inserts several drinks
     private static void insertDrink(SQLiteDatabase db, String name, String description, int resourceId) {
 
-        //ContentValues opbject is used to hold name / value pairs of data
+        //ContentValues object is used to hold name / value pairs of data
         ContentValues drinkValues = new ContentValues();
 
         //example

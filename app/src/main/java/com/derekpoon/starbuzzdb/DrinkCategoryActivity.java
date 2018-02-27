@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 public class DrinkCategoryActivity extends ListActivity {
 
+    //adding these private variables so we can close the database
+    //and cursor in our onDestroy() method
     private SQLiteDatabase db;
     private Cursor cursor;
 
@@ -32,10 +34,12 @@ public class DrinkCategoryActivity extends ListActivity {
             SQLiteOpenHelper starbuzzDatabaseHelper = new StarBuzzDatabaseHelper(this);
             db = starbuzzDatabaseHelper.getReadableDatabase();
 
+            //create the cursor
             cursor = db.query("DRINK",
                     new String[]{"_id", "NAME"},
                     null, null, null, null, null);
 
+            //create a cursor adapter
             CursorAdapter listAdapter = new
                     SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor,
                     new String[]{"NAME"},
@@ -48,6 +52,9 @@ public class DrinkCategoryActivity extends ListActivity {
         }
 
     }
+
+    //we're closing the database and cursor in the activity's onDestroy()
+    //method.
 
     @Override
     public void onDestroy(){

@@ -62,6 +62,7 @@ public class DrinkActivity extends Activity {
                 CheckBox favorite = (CheckBox)findViewById(R.id.favourite);
                 favorite.setChecked(isFavorite);
             }
+            //close the cursor and the database
             cursor.close();
             db.close();
         } catch(SQLiteException e) {
